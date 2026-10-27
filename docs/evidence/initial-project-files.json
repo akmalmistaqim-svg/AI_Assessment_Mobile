@@ -1,0 +1,157 @@
+[
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\lib\\main.dart",
+    "Bytes": 4927,
+    "SHA256": "2E73660D17441987859C11B2FF5BE835E72FDD9F6B8D967F9F5CA69E736A4883"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\settings.gradle.kts",
+    "Bytes": 796,
+    "SHA256": "092BA880C8D4A07591AAFC082F45DEEDC9AFCF60C113A4BB3D13CBE1A1FCE9DE"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\gradlew.bat",
+    "Bytes": 2404,
+    "SHA256": "C13C6E91B9A517783976DE213D46398C661EA9E17651376D7301E839EAEDCC62"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\gradlew",
+    "Bytes": 4971,
+    "SHA256": "EC56C02543666D92D9AC5AE7FCC48F88CE4DE0DEB8B7F9B39928CA46F68C1B2B"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\gradle.properties",
+    "Bytes": 306,
+    "SHA256": "7714698DE712A7872E371F0DBAE626C255FC83AC1C15E52E7CD9FCAA241B5092"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\pubspec.yaml",
+    "Bytes": 3939,
+    "SHA256": "34EEE3DC90BF2F803373BF9DDDBE448C98D9C3C99CABF96077E942EB93699F78"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\pubspec.lock",
+    "Bytes": 6086,
+    "SHA256": "C4354FB4312ABFCC5274701FC2025565E8ABD17D58027768C131CB43156F6401"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\README.md",
+    "Bytes": 3033,
+    "SHA256": "8CF415EF32EF841AF223040ABC6775183BD87C879D419787ECC5C622EB992C28"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\.metadata",
+    "Bytes": 968,
+    "SHA256": "7E9C8E03DC7262A6715CEA8E8499C633904BB6B13BD7C2F0593AB4C947A95E85"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\gradle\\wrapper\\gradle-wrapper.properties",
+    "Bytes": 207,
+    "SHA256": "594A00250EF7A36609A01F3263BF5ED63963AFAF9CA9F82F2CD1DE0F6F056383"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\gradle\\wrapper\\gradle-wrapper.jar",
+    "Bytes": 53636,
+    "SHA256": "16CAEAF66D57A0D1D2087FEF6A97EFA62DE8DA69AFA5B908F40DB35AFC4342DA"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\build.gradle.kts",
+    "Bytes": 561,
+    "SHA256": "218F400E3FFF31C9C986A2535DFB974560E1B4D33CC27B7C1FEE96A2B7E44454"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\.gitignore",
+    "Bytes": 794,
+    "SHA256": "0581D23086F7283DC97D2D5BDE4F60724F8115F67BAA76949596790AB9800DD7"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\profile\\AndroidManifest.xml",
+    "Bytes": 385,
+    "SHA256": "B01A4541A8144C15BC617BAB7EB267C99FA1476368FBBDA5A12CDBF4E316A34C"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\test\\widget_test.dart",
+    "Bytes": 1103,
+    "SHA256": "E84FB1DFBCF37C00AAE9324D4175FB80B3F83251DB112A2F3D92B75325FA93D6"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\.gitignore",
+    "Bytes": 267,
+    "SHA256": "C9AF75DBC2C8AA867476A09426C80B178C4AEED8B9393AE48503EEDFA3273D71"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\analysis_options.yaml",
+    "Bytes": 1507,
+    "SHA256": "81326DC8EB2CE39EB2E00ED1A5E44B692AAE9AE9BCEC15E6E131F0CAC213E4CB"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\build.gradle.kts",
+    "Bytes": 1843,
+    "SHA256": "40B0C52C57283BB964DC5000B224F45129154530F6B050C1BC6D078B2F5E31D2"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\debug\\AndroidManifest.xml",
+    "Bytes": 385,
+    "SHA256": "B01A4541A8144C15BC617BAB7EB267C99FA1476368FBBDA5A12CDBF4E316A34C"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\main\\AndroidManifest.xml",
+    "Bytes": 2255,
+    "SHA256": "1C959465AB7BF3C760017C9BDC63CB4AFE031AF26CBFCAC661F26D234C3E5EFB"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\main\\kotlin\\com\\example\\dexa_assessment_mobile\\MainActivity.kt",
+    "Bytes": 141,
+    "SHA256": "A94110AB6C64B62081DF921DBDF0B2F9B61415B9FDF8D65844011D06424A3CFE"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\main\\java\\io\\flutter\\plugins\\GeneratedPluginRegistrant.java",
+    "Bytes": 516,
+    "SHA256": "462F4A19778F3FE486674C6AB64B62F555095BDDB6DFB6690A1D63AD92EF0F54"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\main\\res\\drawable\\launch_background.xml",
+    "Bytes": 446,
+    "SHA256": "2DF60E2CFBEE873CE2858088CF003E6B93498F2F568476DA437610467EA1A9D7"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+    "Bytes": 1013,
+    "SHA256": "EA763597DC1A84C8034251CAEE98D7753E0FBF57340FFC94677427DE4B537516"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\main\\res\\values\\styles.xml",
+    "Bytes": 1014,
+    "SHA256": "CCA15A99B59380A548BF6A890F7CA5380EE509B1F9BBB2F5F9EC3589FA25C2F7"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png",
+    "Bytes": 1443,
+    "SHA256": "3C34E1F298D0C9EA3455D46DB6B7759C8211A49E9EC6E44B635FC5C87DFB4180"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png",
+    "Bytes": 1031,
+    "SHA256": "4D470BF22D5C17D84EDC5F82516D1BA8A1C09559CD761CEFB792F86D9F52B540"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png",
+    "Bytes": 442,
+    "SHA256": "C7C0C0189145E4E32A401C61C9BDC615754B0264E7AFAE24E834BB81049EAF81"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png",
+    "Bytes": 721,
+    "SHA256": "E14AA40904929BF313FDED22CF7E7FFCBF1D1AAC4263B5EF1BE8BFCE650397AA"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png",
+    "Bytes": 544,
+    "SHA256": "6A7C8F0D703E3682108F9662F813302236240D3F8F638BB391E32BFB96055FEF"
+  },
+  {
+    "Path": "D:\\Dexa_Assessment_Mobile\\android\\app\\src\\main\\res\\drawable-v21\\launch_background.xml",
+    "Bytes": 450,
+    "SHA256": "DCA312EC77DE83E43EF70A825C299B51451247286C29167D62F19165750B8793"
+  }
+]
