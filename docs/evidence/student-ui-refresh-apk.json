@@ -1,0 +1,9 @@
+{
+  "path": "D:\\Dexa_Assessment_Mobile\\build\\app\\outputs\\flutter-apk\\app-debug.apk",
+  "bytes": 194709489,
+  "sha256": "99247ef9a8cf780ee5f520366437540c241cd6a04ed5a549626e4d1daa830221",
+  "entrypoint": "lib/main.dart",
+  "login_heading": "Masuk ke akun Anda",
+  "integration_test_title_present": false,
+  "fixture_email_present": false
+}

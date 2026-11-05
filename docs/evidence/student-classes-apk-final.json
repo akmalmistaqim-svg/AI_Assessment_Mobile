@@ -1,0 +1,12 @@
+{
+  "path": "D:\\Dexa_Assessment_Mobile\\build\\app\\outputs\\flutter-apk\\app-debug.apk",
+  "bytes": 194709489,
+  "sha256": "0a37a3aa2993b012c856a39be646cd233c370328d1b154d412508527857b3a8a",
+  "entrypoint": "lib/main.dart",
+  "checks": {
+    "classes_ui_present": true,
+    "join_api_present": true,
+    "test_repository_present": false,
+    "test_account_present": false
+  }
+}

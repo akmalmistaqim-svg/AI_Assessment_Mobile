@@ -1,0 +1,28 @@
+{
+  "assignmentId": "c2b06c1a87b37498e8f08902a",
+  "classId": "cc4fccf2b48bc440bbadfff2c",
+  "submissionId": "c1c29c703c79845578979febc",
+  "student": "teskelas",
+  "submissionCount": 1,
+  "versions": [
+    {
+      "number": 1,
+      "type": "TEXT",
+      "fileName": null
+    },
+    {
+      "number": 2,
+      "type": "DOCX",
+      "fileName": "teskelas-jawaban.docx"
+    },
+    {
+      "number": 3,
+      "type": "PDF",
+      "fileName": "teskelas-jawaban.pdf"
+    }
+  ],
+  "activeType": "PDF",
+  "contentMarkersVerified": true,
+  "downloadMatchesOriginal": true,
+  "sha256": "7fb43f44d5e4c4d392a59a37dd6030b0003b1247921c9eeac46ed6870eed5156"
+}

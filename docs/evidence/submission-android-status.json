@@ -1,0 +1,18 @@
+{
+  "boot": {
+    "exit": 0,
+    "output": "1",
+    "error": ""
+  },
+  "package": {
+    "exit": 0,
+    "output": "package:/data/app/~~jh2SZjARq9ENbvo0IEQgrA==/com.example.dexa_assessment_mobile-Hfcb7r4b1AHy7OjFI3n8dQ==/base.apk",
+    "error": ""
+  },
+  "latestApkInstall": "Success",
+  "launchStatus": "timeout",
+  "launchState": "UNKNOWN (-1)",
+  "launchWaitMs": 16114,
+  "nativeFilePickerVerified": false,
+  "qaEmulatorStopped": true
+}

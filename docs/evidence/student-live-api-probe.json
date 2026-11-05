@@ -1,0 +1,11 @@
+{
+  "readiness": {
+    "status": "ready",
+    "database": "connected"
+  },
+  "login": "passed",
+  "role": "MAHASISWA",
+  "profile_matches_login": true,
+  "class_count": 1,
+  "released_grade_count": 0
+}

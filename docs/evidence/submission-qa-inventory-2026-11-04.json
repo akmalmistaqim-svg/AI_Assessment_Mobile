@@ -1,0 +1,42 @@
+{
+  "taskId": "c2b06c1a87b37498e8f08902a",
+  "classId": "cc4fccf2b48bc440bbadfff2c",
+  "submissions": [
+    {
+      "id": "c1c29c703c79845578979febc",
+      "userId": "c50daef005586471f855f8a75",
+      "versions": [
+        {
+          "id": "cce134050f7224274bb49c3ce",
+          "number": 3,
+          "type": "PDF",
+          "fileUrl": "87ecb61adb41422fa03ea29d27c1a773.pdf"
+        },
+        {
+          "id": "cbb31a36cf4c2400da00832a1",
+          "number": 2,
+          "type": "DOCX",
+          "fileUrl": "68a11cb3e38f48c6bde8ffba0efa704a.docx"
+        },
+        {
+          "id": "cc2107cd3b5294530a44da835",
+          "number": 1,
+          "type": "TEXT",
+          "fileUrl": null
+        }
+      ]
+    },
+    {
+      "id": "ce6ccd71ce2704463b3a482bc",
+      "userId": "cd6a5579968704b229ee3cec4",
+      "versions": [
+        {
+          "id": "cfd173f9ab8f1460d99b473b4",
+          "number": 1,
+          "type": "TEXT",
+          "fileUrl": null
+        }
+      ]
+    }
+  ]
+}

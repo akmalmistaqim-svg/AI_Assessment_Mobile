@@ -1,0 +1,15 @@
+{
+  "path": "D:\\Dexa_Assessment_Mobile\\build\\app\\outputs\\flutter-apk\\app-debug.apk",
+  "bytes": 194709489,
+  "sha256": "908336910ca515ad65c76ee59b2576d563574fca2e68fe720552cde985571f98",
+  "modified_at": "2026-10-29T05:16:13.980993+07:00",
+  "entrypoint": "lib/main.dart",
+  "checks": {
+    "student_ui_present": true,
+    "latest_theme_present": true,
+    "integration_test_present": false,
+    "fixture_password_present": false,
+    "fixture_email_present": false
+  },
+  "note": "Normal debug APK built after Android integration testing; not separately launched after this build."
+}

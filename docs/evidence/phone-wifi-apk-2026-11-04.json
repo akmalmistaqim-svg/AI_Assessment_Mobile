@@ -1,0 +1,18 @@
+[
+  {
+    "abi": "arm64-v8a",
+    "path": "D:\\Dexa_Assessment_Mobile\\build\\qa-artifacts\\dexa-phone-wifi-arm64-v8a-debug.apk",
+    "bytes": 82807981,
+    "sha256": "bb810444ce05a4fe9cbba7f5c0fb59cd576ed558808afc282acde681e36dc493",
+    "endpoint": "http://192.168.1.66:3001",
+    "target": "lib/main.dart"
+  },
+  {
+    "abi": "armeabi-v7a",
+    "path": "D:\\Dexa_Assessment_Mobile\\build\\qa-artifacts\\dexa-phone-wifi-armeabi-v7a-debug.apk",
+    "bytes": 61843223,
+    "sha256": "60533a3d5397d62903b36bc4fb92bd0483dbf046c8d9d3dc9b1fae71fbf810f4",
+    "endpoint": "http://192.168.1.66:3001",
+    "target": "lib/main.dart"
+  }
+]

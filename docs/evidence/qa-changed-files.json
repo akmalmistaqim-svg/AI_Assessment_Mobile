@@ -1,0 +1,17 @@
+[
+  {
+    "path": "D:\\Dexa_Assessment_Mobile\\lib\\pages\\announcements_page.dart",
+    "beforeSha256": "6301b63a97d14d4b856dd454aec8d972e3ed4ce1a6306e0198c7b714474fc154",
+    "afterSha256": "96f8a4fbec50dcd417ec30cd61a4dd950060e3f0675f91b672c8ab76c300e661"
+  },
+  {
+    "path": "D:\\Dexa_Assessment_Mobile\\lib\\pages\\notification_detail_page.dart",
+    "beforeSha256": "32f1b03606f2048721ef78f10393726818a80054a19026eb1713e008031fff7e",
+    "afterSha256": "a69ac284239ddcfa3586b863b0e1c78d8234252585655d538cbd8b5a7139f51b"
+  },
+  {
+    "path": "D:\\Dexa_Assessment_Mobile\\lib\\pages\\announcement_detail_page.dart",
+    "beforeSha256": "c877454223b73bacab71d3b03b2ed3b289efcb020ae0ec3e56beac90561dbfc5",
+    "afterSha256": "b0a71229392695ef91ebccf28c72bb1de88bc7d5cdc634e141254c0187ba1e8b"
+  }
+]

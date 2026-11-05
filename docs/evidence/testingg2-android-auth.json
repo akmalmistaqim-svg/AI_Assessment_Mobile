@@ -1,0 +1,26 @@
+{
+  "testedAt": "2026-11-05T08:58:39+07:00",
+  "device": "Android emulator API 37",
+  "connection": "10.0.2.2:3001 to loopback FastAPI",
+  "account": "testingg2@example.com",
+  "name": "testingg2",
+  "role": "MAHASISWA",
+  "database": "ai_assessment_copilot",
+  "matchingRows": 1,
+  "initialAttempt": "No registration confirmation or database row",
+  "retry": "Input and UI response explicitly awaited; Android integration test passed",
+  "verified": [
+    "Registration success",
+    "Wrong password rejected",
+    "Correct password opened dashboard",
+    "Own email and student role in profile",
+    "Logout returned to login",
+    "Unauthenticated GET /auth/me returned 401"
+  ],
+  "excluded": [
+    "Physical phone and Wi-Fi",
+    "API 35",
+    "Simultaneous web session",
+    "Production security audit"
+  ]
+}

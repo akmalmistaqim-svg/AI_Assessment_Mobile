@@ -1,0 +1,152 @@
+{
+  "date": "2026-11-04",
+  "transport": "live FastAPI HTTP, not native Android",
+  "checks": [
+    {
+      "name": "missing authorization",
+      "http": 401,
+      "expected": [
+        401
+      ],
+      "passed": true
+    },
+    {
+      "name": "invalid token",
+      "http": 401,
+      "expected": [
+        401
+      ],
+      "passed": true
+    },
+    {
+      "name": "teacher cannot submit",
+      "http": 403,
+      "expected": [
+        403
+      ],
+      "passed": true
+    },
+    {
+      "name": "empty answer",
+      "http": 400,
+      "expected": [
+        400,
+        422
+      ],
+      "passed": true
+    },
+    {
+      "name": "wrong extension",
+      "http": 400,
+      "expected": [
+        400
+      ],
+      "passed": true
+    },
+    {
+      "name": "fake PDF content",
+      "http": 400,
+      "expected": [
+        400
+      ],
+      "passed": true
+    },
+    {
+      "name": "corrupt PDF content",
+      "http": 400,
+      "expected": [
+        400
+      ],
+      "passed": true
+    },
+    {
+      "name": "fake DOCX content",
+      "http": 400,
+      "expected": [
+        400
+      ],
+      "passed": true
+    },
+    {
+      "name": "corrupt DOCX content",
+      "http": 400,
+      "expected": [
+        400
+      ],
+      "passed": true
+    },
+    {
+      "name": "PDF over 10 MiB",
+      "http": 400,
+      "expected": [
+        400,
+        413
+      ],
+      "passed": true
+    },
+    {
+      "name": "other student cannot read submission",
+      "http": 403,
+      "expected": [
+        403,
+        404
+      ],
+      "passed": true
+    },
+    {
+      "name": "other student cannot download file",
+      "http": 403,
+      "expected": [
+        403,
+        404
+      ],
+      "passed": true
+    },
+    {
+      "name": "actual expired task",
+      "http": 400,
+      "expected": [
+        400,
+        403
+      ],
+      "passed": true
+    },
+    {
+      "name": "HTTP session isolation: second account",
+      "passed": true
+    },
+    {
+      "name": "HTTP session isolation: first account again",
+      "passed": true
+    },
+    {
+      "name": "rejections leave submission versions unchanged",
+      "passed": true
+    }
+  ],
+  "passed": 16,
+  "failed": 0,
+  "before": [
+    [
+      "c1c29c703c79845578979febc",
+      "cce134050f7224274bb49c3ce",
+      3
+    ]
+  ],
+  "after": [
+    [
+      "c1c29c703c79845578979febc",
+      "cce134050f7224274bb49c3ce",
+      3
+    ]
+  ],
+  "notCovered": [
+    "closed assignment",
+    "released grade upload policy",
+    "ASSISTANT class role",
+    "native device disconnection",
+    "Android session switching"
+  ],
+  "dataCreated": false,
+  "earlierTestIssue": "Initial run retained a valid fixture login cookie; see initial report and QA inventory."
+}

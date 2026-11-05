@@ -1,0 +1,10 @@
+{
+  "account": "teskelas",
+  "accountId": "c50daef005586471f855f8a75",
+  "classId": "cc4fccf2b48bc440bbadfff2c",
+  "className": "Rekayasa Perangkat Lunak A",
+  "enrolledBefore": false,
+  "enrollmentsBefore": 2,
+  "tasksBefore": 1,
+  "createdVia": "FastAPI /auth/register; no seeding"
+}

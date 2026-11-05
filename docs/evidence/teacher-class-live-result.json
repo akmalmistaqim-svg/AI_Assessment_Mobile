@@ -1,0 +1,16 @@
+{
+  "teacherLogin": "passed",
+  "dashboard": "visible",
+  "className": "Rekayasa Perangkat Lunak A",
+  "studentVisible": "teskelas",
+  "membershipCount": 1,
+  "totalMembers": 3,
+  "assignments": [
+    {
+      "title": "Tugas 1: Spesifikasi Kebutuhan Perangkat Lunak",
+      "submissionCount": 1
+    }
+  ],
+  "pageErrors": [],
+  "uploadFromMobile": "not implemented; no submission performed"
+}

@@ -1,0 +1,12 @@
+{
+  "transport": "FastAPI TestClient using actual application and read-only PostgreSQL",
+  "fixture_login": "passed",
+  "class_list": "passed",
+  "task_list": "passed",
+  "unknown_code_status": 404,
+  "already_enrolled_status": 400,
+  "transaction_read_only": true,
+  "enrollment_counts_unchanged": true,
+  "ihsan_enrollments": 0,
+  "limitations": "Not an Android runtime test; no Ihsan login; no successful enrollment write attempted."
+}

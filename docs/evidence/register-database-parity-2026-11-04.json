@@ -1,0 +1,31 @@
+{
+  "database": "ai_assessment_copilot",
+  "engine": "PostgreSQL",
+  "serverVersion": "PostgreSQL 16.15 (Debian 16.15-1.pgdg12+2) on x86_64-pc-linux-gnu",
+  "table": "users",
+  "account": {
+    "id": "c0f7629a732674cfb89b9480c",
+    "name": "Tes Registrasi Mobile 20261104",
+    "email": "tesregistrasi.mobile.20261104@example.com",
+    "role": "MAHASISWA"
+  },
+  "webBackendUrl": "http://127.0.0.1:3001",
+  "sameUserIdAcrossMobileWebDatabase": true,
+  "logins": {
+    "mobile_wifi": {
+      "id": "c0f7629a732674cfb89b9480c",
+      "role": "MAHASISWA"
+    },
+    "backend_loopback": {
+      "id": "c0f7629a732674cfb89b9480c",
+      "role": "MAHASISWA"
+    },
+    "website": {
+      "id": "c0f7629a732674cfb89b9480c",
+      "role": "MAHASISWA"
+    }
+  },
+  "duplicateRegistrationHttp": 400,
+  "databaseMutationsByThisVerifier": false,
+  "scope": "Running QA backend uses the frontend DATABASE_URL explicitly. This does not claim every alternate runner/configuration uses that DB."
+}
