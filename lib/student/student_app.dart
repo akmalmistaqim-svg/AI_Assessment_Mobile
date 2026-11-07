@@ -302,7 +302,7 @@ class _LoginState extends State<_Login> {
     super.dispose();
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     if (widget.state.signingIn ||
         !widget.state.repository.isConfigured ||
         !form.currentState!.validate()) {
@@ -311,8 +311,12 @@ class _LoginState extends State<_Login> {
     FocusScope.of(context).unfocus();
     setState(() => registrationMessage = null);
     final secret = password.text;
-    password.clear();
-    widget.state.signIn(identifier.text, secret);
+    await widget.state.signIn(identifier.text, secret);
+    if (!mounted) return;
+    if (widget.state.loginError ==
+        const StudentFailure(FailureKind.credentials).message) {
+      password.clear();
+    }
   }
 
   @override
@@ -332,7 +336,8 @@ class _LoginState extends State<_Login> {
                   children: [
                     StudentAuthHeader(
                       registering: false,
-                      onSwitch: state.signingIn ||
+                      onSwitch:
+                          state.signingIn ||
                               !state.repository.isConfigured ||
                               state.repository is! StudentRegistrationRepository
                           ? null
@@ -465,7 +470,7 @@ class _LoginState extends State<_Login> {
   }
 }
 
-class _Workspace extends StatelessWidget {
+class _Workspace extends StatefulWidget {
   const _Workspace({
     required this.state,
     required this.onAnnouncement,
@@ -477,104 +482,122 @@ class _Workspace extends StatelessWidget {
   final ValueChanged<NotificationItem> onNotification;
   final ValueChanged<StudentClass> onClass;
   @override
-  Widget build(BuildContext context) => PopScope(
-    canPop: state.tab == 0,
-    onPopInvokedWithResult: (didPop, result) {
-      if (!didPop) state.selectTab(0);
-    },
-    child: Scaffold(
-      appBar: AppBar(
-        title: const DexaBrand(),
-        toolbarHeight: 76,
-        actions: [
-          if (state.profile == null)
+  State<_Workspace> createState() => _WorkspaceState();
+}
+
+class _WorkspaceState extends State<_Workspace> {
+  final visitedTabs = <int>{0};
+  StudentController get state => widget.state;
+
+  Widget page(int index) => switch (index) {
+    0 => _Home(state: state, onAnnouncement: widget.onAnnouncement),
+    1 => StudentClassesPage(state: state, onOpen: widget.onClass),
+    2 => _Information(state: state, onOpen: widget.onAnnouncement),
+    3 => _Notifications(state: state, onOpen: widget.onNotification),
+    _ => _Profile(state: state),
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    visitedTabs.add(state.tab);
+    return PopScope(
+      canPop: state.tab == 0,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) state.selectTab(0);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const DexaBrand(),
+          toolbarHeight: 76,
+          actions: [
+            if (state.profile == null)
+              IconButton(
+                tooltip: 'Kembali ke halaman masuk',
+                onPressed: state.signOut,
+                icon: const Icon(Icons.logout),
+              ),
             IconButton(
-              tooltip: 'Kembali ke halaman masuk',
-              onPressed: state.signOut,
-              icon: const Icon(Icons.logout),
+              tooltip: 'Muat ulang data',
+              onPressed: state.loading || state.joining ? null : state.refresh,
+              icon: const Icon(Icons.refresh),
             ),
-          IconButton(
-            tooltip: 'Muat ulang data',
-            onPressed: state.loading || state.joining ? null : state.refresh,
-            icon: const Icon(Icons.refresh),
-          ),
-          const SizedBox(width: 4),
-        ],
-      ),
-      body: SafeArea(
-        top: false,
-        child: Column(
-          children: [
-            if (state.loading) const LinearProgressIndicator(minHeight: 2),
-            Expanded(
-              child: state.profile == null
-                  ? ListView(
-                      padding: const EdgeInsets.all(24),
-                      children: [
-                        _DataWarning(state: state),
-                        Text(
-                          state.loading
-                              ? 'Memuat akun Anda…'
-                              : 'Data mahasiswa belum tersedia.',
-                          textAlign: TextAlign.center,
+            const SizedBox(width: 4),
+          ],
+        ),
+        body: SafeArea(
+          top: false,
+          child: Column(
+            children: [
+              if (state.loading) const LinearProgressIndicator(minHeight: 2),
+              Expanded(
+                child: state.profile == null
+                    ? ListView(
+                        padding: const EdgeInsets.all(24),
+                        children: [
+                          _DataWarning(state: state),
+                          Text(
+                            state.loading
+                                ? 'Memuat akun Anda…'
+                                : 'Data mahasiswa belum tersedia.',
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      )
+                    : IndexedStack(
+                        index: state.tab,
+                        children: List.generate(
+                          5,
+                          (index) => visitedTabs.contains(index)
+                              ? RepaintBoundary(child: page(index))
+                              : const SizedBox.shrink(),
                         ),
-                      ],
-                    )
-                  : IndexedStack(
-                      index: state.tab,
-                      children: [
-                        _Home(state: state, onAnnouncement: onAnnouncement),
-                        StudentClassesPage(state: state, onOpen: onClass),
-                        _Information(state: state, onOpen: onAnnouncement),
-                        _Notifications(state: state, onOpen: onNotification),
-                        _Profile(state: state),
-                      ],
-                    ),
+                      ),
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: state.tab,
+          onDestinationSelected: (index) {
+            FocusManager.instance.primaryFocus?.unfocus();
+            state.selectTab(index);
+          },
+          destinations: [
+            const NavigationDestination(
+              icon: Icon(Icons.home_outlined),
+              selectedIcon: Icon(Icons.home_rounded),
+              label: 'Beranda',
+            ),
+            const NavigationDestination(
+              icon: Icon(Icons.school_outlined),
+              selectedIcon: Icon(Icons.school),
+              label: 'Kelas Saya',
+            ),
+            const NavigationDestination(
+              icon: Icon(Icons.article_outlined),
+              selectedIcon: Icon(Icons.article_rounded),
+              label: 'Informasi',
+            ),
+            NavigationDestination(
+              icon: Badge(
+                isLabelVisible: state.unreadCount > 0,
+                label: Text(
+                  state.unreadCount > 99 ? '99+' : '${state.unreadCount}',
+                ),
+                child: const Icon(Icons.notifications_outlined),
+              ),
+              label: 'Notifikasi',
+            ),
+            const NavigationDestination(
+              icon: Icon(Icons.person_outline),
+              selectedIcon: Icon(Icons.person),
+              label: 'Profil',
             ),
           ],
         ),
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: state.tab,
-        onDestinationSelected: (index) {
-          FocusManager.instance.primaryFocus?.unfocus();
-          state.selectTab(index);
-        },
-        destinations: [
-          const NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home_rounded),
-            label: 'Beranda',
-          ),
-          const NavigationDestination(
-            icon: Icon(Icons.school_outlined),
-            selectedIcon: Icon(Icons.school),
-            label: 'Kelas Saya',
-          ),
-          const NavigationDestination(
-            icon: Icon(Icons.article_outlined),
-            selectedIcon: Icon(Icons.article_rounded),
-            label: 'Informasi',
-          ),
-          NavigationDestination(
-            icon: Badge(
-              isLabelVisible: state.unreadCount > 0,
-              label: Text(
-                state.unreadCount > 99 ? '99+' : '${state.unreadCount}',
-              ),
-              child: const Icon(Icons.notifications_outlined),
-            ),
-            label: 'Notifikasi',
-          ),
-          const NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person),
-            label: 'Profil',
-          ),
-        ],
-      ),
-    ),
-  );
+    );
+  }
 }
 
 class _Home extends StatelessWidget {
@@ -887,7 +910,8 @@ class _Notifications extends StatelessWidget {
             (item) => _FeedTile(
               title: item.title,
               subtitle: item.summary,
-              meta: '${item.isRead ? 'Dibaca' : 'Belum dibaca'} · ${item.date}',
+              meta:
+                  '${item.isRead ? 'Dibaca' : 'Belum dibaca'} · ${item.date}',
               unread: !item.isRead,
               onTap: () => onOpen(item),
             ),

@@ -103,39 +103,72 @@ class StudentController extends ChangeNotifier {
     loading = true;
     dataError = null;
     _emit();
-    try {
-      final result = await Future.wait<Object>([
-        repository.fetchProfile(session),
-        repository.fetchAnnouncements(session),
-        repository.fetchNotifications(session),
-        repository.fetchClasses(session),
-      ]);
-      if (!_current(generation)) return;
-      final fetchedProfile = result[0] as StudentProfile;
-      if (fetchedProfile.id != session.accountId) {
-        throw const StudentFailure(FailureKind.expired);
-      }
-      // Preserve confirmed reads from concurrent markRead calls in this session.
-      final readIds = _notifications
-          .where((n) => n.isRead)
-          .map((n) => n.id)
-          .toSet();
-      profile = fetchedProfile;
-      _classes = List.of(result[3] as List<StudentClass>);
-      _announcements = List.of(result[1] as List<Announcement>);
-      _notifications = (result[2] as List<NotificationItem>)
-          .map((n) => n.copyWith(isRead: n.isRead || readIds.contains(n.id)))
-          .toList();
-      if (!categories.contains(category)) category = null;
-    } catch (error) {
+    void handleError(Object error) {
       if (!_current(generation)) return;
       if (error is StudentFailure &&
           (error.kind == FailureKind.expired ||
               error.kind == FailureKind.forbidden)) {
         signOut(message: error.message);
-        return;
+      } else {
+        dataError = _message(error);
+        _emit();
       }
-      dataError = _message(error);
+    }
+
+    Future<bool> loadProfile() async {
+      try {
+        final fetchedProfile = await repository.fetchProfile(session);
+        if (!_current(generation)) return false;
+        if (fetchedProfile.id != session.accountId) {
+          throw const StudentFailure(FailureKind.expired);
+        }
+        profile = fetchedProfile;
+        _emit();
+        return true;
+      } catch (error) {
+        handleError(error);
+        return false;
+      }
+    }
+
+    final profileReady = loadProfile();
+    Future<void> loadPart<T>(
+      Future<T> Function() fetch,
+      void Function(T) apply,
+    ) async {
+      try {
+        final result = await fetch();
+        // Show account data only after validating the current profile.
+        if (!await profileReady || !_current(generation)) return;
+        apply(result);
+        _emit();
+      } catch (error) {
+        handleError(error);
+      }
+    }
+
+    try {
+      await Future.wait<void>([
+        profileReady.then<void>((_) {}),
+        loadPart(() => repository.fetchAnnouncements(session), (items) {
+          _announcements = List.of(items);
+          if (!categories.contains(category)) category = null;
+        }),
+        loadPart(() => repository.fetchNotifications(session), (items) {
+          final readIds = _notifications
+              .where((n) => n.isRead)
+              .map((n) => n.id)
+              .toSet();
+          _notifications = items
+              .map(
+                (n) => n.copyWith(isRead: n.isRead || readIds.contains(n.id)),
+              )
+              .toList();
+        }),
+        loadPart(() => repository.fetchClasses(session), (items) {
+          _classes = List.of(items);
+        }),
+      ]);
     } finally {
       if (_current(generation)) {
         loading = false;

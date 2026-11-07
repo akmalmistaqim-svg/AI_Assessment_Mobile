@@ -21,10 +21,12 @@ class FastApiStudentRepository
   FastApiStudentRepository({
     required this.baseUri,
     this.timeout = const Duration(seconds: 20),
+    this.connectionTimeout = const Duration(seconds: 5),
     this.allowInsecureDevelopment = false,
   });
   final Uri baseUri;
   final Duration timeout;
+  final Duration connectionTimeout;
   final bool allowInsecureDevelopment;
   Future<void> _writeQueue = Future<void>.value();
   @override
@@ -53,7 +55,8 @@ class FastApiStudentRepository
     AnswerFile? file,
   }) async {
     if (!isConfigured) throw const StudentFailure(FailureKind.unavailable);
-    final client = HttpClient()..connectionTimeout = timeout;
+    final client = HttpClient()..connectionTimeout = connectionTimeout;
+    bool mayHaveSent = false;
     try {
       return await (() async {
         final request = await client.openUrl(method, _url(path));
@@ -66,6 +69,8 @@ class FastApiStudentRepository
             'Bearer ${_credentials(session).token}',
           );
         }
+        // Once a request may be sent, a lost response cannot prove failure.
+        mayHaveSent = true;
         if (file != null) {
           final boundary =
               'dexa${DateTime.now().microsecondsSinceEpoch}${Random.secure().nextInt(1 << 30)}';
@@ -222,7 +227,9 @@ class FastApiStudentRepository
       );
     } catch (_) {
       if (registering) {
-        throw const StudentFailure(FailureKind.registrationUncertain);
+        throw StudentFailure(
+          mayHaveSent ? FailureKind.registrationUncertain : FailureKind.network,
+        );
       }
       throw StudentFailure(
         submitting ? FailureKind.submissionUncertain : FailureKind.network,
@@ -311,6 +318,18 @@ class FastApiStudentRepository
 
   @override
   Future<List<StudentClass>> fetchClasses(StudentSession session) async {
+    final credentials = _credentials(session);
+    final pending = credentials.classesRequest ??= _fetchClasses(session);
+    try {
+      return await pending;
+    } finally {
+      if (identical(credentials.classesRequest, pending)) {
+        credentials.classesRequest = null;
+      }
+    }
+  }
+
+  Future<List<StudentClass>> _fetchClasses(StudentSession session) async {
     final raw = _list(await _request('GET', '/classes', session: session));
     return raw.map((value) {
       final c = _object(value);
@@ -404,8 +423,18 @@ class FastApiStudentRepository
   Future<List<Announcement>> fetchAnnouncements(StudentSession session) async {
     final courses = await fetchClasses(session);
     final items = <Announcement>[];
-    for (final course in courses.where((c) => !c.archived)) {
-      items.addAll(await fetchClassAssignments(session, course));
+    final activeCourses = courses.where((c) => !c.archived).toList();
+    // Bound concurrent requests so a large enrollment does not flood the API.
+    for (var start = 0; start < activeCourses.length; start += 3) {
+      _credentials(session);
+      final batch = await Future.wait(
+        activeCourses
+            .skip(start)
+            .take(3)
+            .map((course) => fetchClassAssignments(session, course)),
+        eagerError: true,
+      );
+      items.addAll(batch.expand((tasks) => tasks));
     }
     return items;
   }
@@ -624,6 +653,7 @@ class FastApiStudentRepository
     // FastAPI /auth/logout only clears a browser cookie; no bearer revocation API.
     // Drop our in-memory token immediately; no credentials persist across restarts.
     credentials.token = null;
+    credentials.classesRequest = null;
   }
 }
 
@@ -631,6 +661,7 @@ class _Credentials {
   _Credentials(this.owner, this.token);
   final FastApiStudentRepository owner;
   String? token;
+  Future<List<StudentClass>>? classesRequest;
   @override
   String toString() => 'Session credentials (redacted)';
 }

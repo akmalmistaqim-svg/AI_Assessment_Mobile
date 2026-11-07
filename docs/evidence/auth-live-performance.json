@@ -1,0 +1,12 @@
+{
+  "environment": "Flutter widget UI with real localhost FastAPI and PostgreSQL",
+  "dashboardProfileMs": 1654,
+  "initialDataMs": 1656,
+  "tabSwitches": 6,
+  "login": true,
+  "profile": true,
+  "refresh": true,
+  "logout": true,
+  "physicalPhoneTested": false,
+  "note": "Timings are host test measurements, not phone benchmarks."
+}

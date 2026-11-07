@@ -111,7 +111,7 @@ class StudentFailure implements Exception {
     FailureKind.submissionBusy =>
       'Jawaban masih dikirim. Tunggu hingga proses selesai.',
     FailureKind.network =>
-      'Data belum dapat dimuat. Periksa koneksi lalu coba lagi.',
+      'Tidak dapat terhubung ke layanan. Periksa koneksi internet atau sambungan USB, lalu coba lagi.',
   };
 }
 
