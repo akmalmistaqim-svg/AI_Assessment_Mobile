@@ -20,7 +20,7 @@ class FastApiStudentRepository
         StudentRegistrationRepository {
   FastApiStudentRepository({
     required this.baseUri,
-    this.timeout = const Duration(seconds: 20),
+    this.timeout = const Duration(seconds: 15),
     this.connectionTimeout = const Duration(seconds: 5),
     this.allowInsecureDevelopment = false,
   });
@@ -264,10 +264,21 @@ class FastApiStudentRepository
     if (_string(data, 'token_type').toLowerCase() != 'bearer') {
       throw const StudentFailure(FailureKind.invalidResponse);
     }
+    final id = _string(user, 'id');
+    final name = user['name'] is String ? (user['name'] as String).trim() : '';
+    final email = user['email'] is String ? (user['email'] as String).trim() : '';
+    final isStudent = _string(user, 'role') == 'MAHASISWA';
     return StudentSession(
-      accountId: _string(user, 'id'),
-      isStudent: _string(user, 'role') == 'MAHASISWA',
+      accountId: id,
+      isStudent: isStudent,
       handle: _Credentials(this, token),
+      initialProfile: (name.isNotEmpty || email.isNotEmpty)
+          ? StudentProfile(
+              id: id,
+              name: name.isEmpty ? 'Mahasiswa' : name,
+              email: email.isEmpty ? identifier.trim() : email,
+            )
+          : null,
     );
   }
 

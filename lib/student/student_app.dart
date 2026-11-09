@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../models/announcement.dart';
@@ -272,6 +274,9 @@ class _LoginState extends State<_Login> {
   final password = TextEditingController();
   bool hidden = true;
   String? registrationMessage;
+  Timer? _slowTimer;
+  bool _showSlowNotice = false;
+
   Future<void> openRegistration() async {
     final repo = widget.state.repository;
     if (widget.state.signingIn ||
@@ -297,6 +302,7 @@ class _LoginState extends State<_Login> {
 
   @override
   void dispose() {
+    _slowTimer?.cancel();
     identifier.dispose();
     password.dispose();
     super.dispose();
@@ -309,9 +315,25 @@ class _LoginState extends State<_Login> {
       return;
     }
     FocusScope.of(context).unfocus();
-    setState(() => registrationMessage = null);
+    _slowTimer?.cancel();
+    setState(() {
+      registrationMessage = null;
+      _showSlowNotice = false;
+    });
+    _slowTimer = Timer(const Duration(seconds: 3), () {
+      if (mounted && widget.state.signingIn) {
+        setState(() => _showSlowNotice = true);
+      }
+    });
     final secret = password.text;
-    await widget.state.signIn(identifier.text, secret);
+    try {
+      await widget.state.signIn(identifier.text, secret);
+    } finally {
+      _slowTimer?.cancel();
+      if (mounted && _showSlowNotice) {
+        setState(() => _showSlowNotice = false);
+      }
+    }
     if (!mounted) return;
     if (widget.state.loginError ==
         const StudentFailure(FailureKind.credentials).message) {
@@ -444,16 +466,49 @@ class _LoginState extends State<_Login> {
                             ? null
                             : _submit,
                         child: state.signingIn
-                            ? const SizedBox(
-                                width: 22,
-                                height: 22,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
+                            ? const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 18,
+                                    height: 18,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text('Memproses…'),
+                                ],
                               )
                             : const Text('Masuk'),
                       ),
                     ),
+                    if (_showSlowNotice && state.signingIn) ...[
+                      const SizedBox(height: 12),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.info_outline,
+                            size: 16,
+                            color: Color(0xFF526577),
+                          ),
+                          SizedBox(width: 8),
+                          Flexible(
+                            child: Text(
+                              'Server sedang disiapkan, mohon tunggu sebentar…',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xFF526577),
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                     const SizedBox(height: 16),
                     const Text(
                       'Kesulitan masuk? Hubungi pengelola akun kampus Anda.',

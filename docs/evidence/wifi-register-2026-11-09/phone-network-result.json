@@ -1,0 +1,15 @@
+{
+  "transport": "HTTP requests executed on physical phone via toybox nc to laptop Wi-Fi IP; no adb reverse used for API",
+  "endpoint": "http://10.111.11.118:3001",
+  "registrationStatus": 201,
+  "loginStatus": 200,
+  "profileStatus": 200,
+  "account": {
+    "id": "c458345303ca04cb3b7491533",
+    "name": "QA WiFi November",
+    "email": "qa.wifi.1794191440@example.com",
+    "role": "MAHASISWA"
+  },
+  "uiAutomation": "Blocked by Android INJECT_EVENTS permission; no UI registration success claimed",
+  "passwordOrTokenIncluded": false
+}

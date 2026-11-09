@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'student_auth_header.dart';
@@ -5,7 +7,10 @@ import 'student_registration.dart';
 import 'student_repository.dart';
 
 class StudentRegistrationPage extends StatefulWidget {
-  const StudentRegistrationPage({super.key, required this.repository});
+  const StudentRegistrationPage({
+    super.key,
+    required this.repository,
+  });
   final StudentRegistrationRepository repository;
   @override
   State<StudentRegistrationPage> createState() =>
@@ -20,8 +25,12 @@ class _StudentRegistrationPageState extends State<StudentRegistrationPage> {
       confirmation = TextEditingController();
   bool busy = false, hidden = true, confirmHidden = true;
   String? error, createdEmail;
+  Timer? _slowTimer;
+  bool _showSlowNotice = false;
+
   @override
   void dispose() {
+    _slowTimer?.cancel();
     name.dispose();
     email.dispose();
     password.dispose();
@@ -32,16 +41,25 @@ class _StudentRegistrationPageState extends State<StudentRegistrationPage> {
   Future<void> submit() async {
     if (busy || createdEmail != null || !form.currentState!.validate()) return;
     FocusScope.of(context).unfocus();
+    _slowTimer?.cancel();
     setState(() {
       busy = true;
       error = null;
+      _showSlowNotice = false;
     });
+    _slowTimer = Timer(const Duration(seconds: 3), () {
+      if (mounted && busy) {
+        setState(() => _showSlowNotice = true);
+      }
+    });
+    final rawEmail = email.text.trim();
+    final rawPassword = password.text;
     try {
       final result = await widget.repository.registerStudent(
         StudentRegistration(
           name: name.text,
-          email: email.text,
-          password: password.text,
+          email: rawEmail,
+          password: rawPassword,
         ),
       );
       if (!mounted) return;
@@ -57,7 +75,13 @@ class _StudentRegistrationPageState extends State<StudentRegistrationPage> {
         );
       }
     } finally {
-      if (mounted) setState(() => busy = false);
+      _slowTimer?.cancel();
+      if (mounted) {
+        setState(() {
+          busy = false;
+          _showSlowNotice = false;
+        });
+      }
     }
   }
 
@@ -255,16 +279,50 @@ class _StudentRegistrationPageState extends State<StudentRegistrationPage> {
                               key: const Key('student-register-submit'),
                               onPressed: busy ? null : submit,
                               child: busy
-                                  ? const SizedBox(
-                                      width: 22,
-                                      height: 22,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                      ),
+                                  ? const Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: 18,
+                                          height: 18,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        SizedBox(width: 10),
+                                        Text('Memproses…'),
+                                      ],
                                     )
                                   : const Text('Buat akun'),
                             ),
                           ),
+                          if (_showSlowNotice && busy) ...[
+                            const SizedBox(height: 12),
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.info_outline,
+                                  size: 16,
+                                  color: Color(0xFF526577),
+                                ),
+                                SizedBox(width: 8),
+                                Flexible(
+                                  child: Text(
+                                    'Server sedang disiapkan, mohon tunggu sebentar…',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xFF526577),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ],
                       ),
                     ),

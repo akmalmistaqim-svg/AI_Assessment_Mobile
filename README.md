@@ -196,3 +196,32 @@ APK emulator menggunakan 10.0.2.2; alamat itu tidak menunjuk laptop jika APK dij
 5. APK HP tersedia di `build/qa-artifacts/dexa-phone-wifi-arm64-v8a-debug.apk` (ARM64), atau `dexa-phone-wifi-armeabi-v7a-debug.apk` (ARM32). Install sesuai arsitektur HP, lalu gunakan akun mahasiswa backend.
 
 Alamat yang dipakai pada 4 November 2026: `192.168.1.66`. Jika IP Wi-Fi laptop berubah, jalankan backend pada IP baru dan build ulang APK debug. Jangan memakai URL localhost pada HP untuk mengarah ke laptop. Pengaturan ini untuk pengujian lokal. Release tetap memerlukan URL HTTPS dan konfigurasi signing produksi; bukan APK debug ini.
+
+## Menjalankan HP tanpa salah alamat backend (9 November 2026)
+
+`flutter run` tanpa `--dart-define` memakai alamat emulator `10.0.2.2:3001` dan tidak cocok untuk HP fisik. IP Wi-Fi dapat berubah. Jangan hardcode alamat lama di perintah build.
+
+Terminal pertama (biarkan tetap berjalan; Docker harus aktif):
+
+```powershell
+cd D:\Dexa_Assessment_Mobile
+powershell -File tools/start_backend_wifi.ps1
+```
+
+Terminal kedua, jika HP terhubung lewat ADB (USB atau debugging nirkabel):
+
+```powershell
+powershell -File tools/run_phone_wifi.ps1
+```
+
+Runner mendeteksi IP Wi-Fi laptop, memeriksa readiness/database, lalu meneruskan URL itu ke Flutter. Koneksi aplikasi ke API memakai Wi-Fi, bukan ADB reverse. Jika ada lebih dari satu HP, tambahkan `-DeviceId <id>`.
+
+Tanpa USB/ADB, buat APK untuk dipasang manual di HP:
+
+```powershell
+powershell -File tools/run_phone_wifi.ps1 -BuildOnly
+```
+
+Salin `build\qa-artifacts\dexa-phone-wifi-arm64-v8a-debug.apk` ke HP dan pasang sebagai pembaruan. HP dan laptop harus pada jaringan yang dapat saling mengakses. Buka URL `/health/ready` yang dicetak runner dari browser HP; harus menampilkan status ready dan database connected. Runner memeriksa sisi laptop; pemeriksaan browser HP tetap diperlukan untuk memastikan jalur Wi-Fi.
+
+Jika IP laptop berganti, ulangi runner backend dan build. Perubahan `--dart-define` memerlukan run/build ulang, bukan hanya hot reload. Docker menjalankan PostgreSQL; FastAPI juga harus tetap aktif. Tampilan warning keyboard/Insets Android bukan bukti bahwa request HTTP berhasil atau gagal.

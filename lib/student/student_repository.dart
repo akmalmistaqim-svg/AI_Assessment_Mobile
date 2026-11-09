@@ -40,11 +40,13 @@ class StudentSession {
     required this.accountId,
     required this.isStudent,
     required this.handle,
+    this.initialProfile,
   });
   final String accountId;
   final bool isStudent;
   // Adapter-owned credentials. Never persist with SharedPreferences or log them.
   final Object handle;
+  final StudentProfile? initialProfile;
 }
 
 enum FailureKind {
@@ -111,7 +113,7 @@ class StudentFailure implements Exception {
     FailureKind.submissionBusy =>
       'Jawaban masih dikirim. Tunggu hingga proses selesai.',
     FailureKind.network =>
-      'Tidak dapat terhubung ke layanan. Periksa koneksi internet atau sambungan USB, lalu coba lagi.',
+      'Tidak dapat terhubung ke server atau waktu permintaan habis. Periksa koneksi Anda dan coba lagi.',
   };
 }
 

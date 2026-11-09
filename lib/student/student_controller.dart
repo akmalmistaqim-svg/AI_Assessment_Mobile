@@ -72,6 +72,9 @@ class StudentController extends ChangeNotifier {
         throw const StudentFailure(FailureKind.forbidden);
       }
       _session = session;
+      if (session.initialProfile != null) {
+        profile = session.initialProfile;
+      }
       signingIn = false;
       _emit();
       await refresh();
